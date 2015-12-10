@@ -1412,8 +1412,9 @@ class CustomGraphicsScene( QtGui.QGraphicsScene):#, QtOpenGL.QGLWidget):
 
             if self.tex > -1:
                 #self._widget.drawTexture(QtCore.QRectF(self.image.rect()),self.tex)
-                d = painter.device()
-                dc = sip.cast(d,QtOpenGL.QGLFramebufferObject)
+                dc = painter.device()
+                if not hasattr(dc, "drawTexture"):
+                    dc = sip.cast(d,QtOpenGL.QGLFramebufferObject)
 
                 rect = QtCore.QRectF(self.image.rect())
                 tl = rect.topLeft()
@@ -1427,7 +1428,7 @@ class CustomGraphicsScene( QtGui.QGraphicsScene):#, QtOpenGL.QGLWidget):
                 painter.beginNativePainting()
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-                dc.drawTexture(rect,self.tex)
+                dc.drawTexture(rect, int(self.tex))
                 painter.endNativePainting()
 
         else:

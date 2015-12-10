@@ -338,7 +338,7 @@ class ClassificationMgr(object):
         for nl in newLabels:
             try:
                 if nl.erasing == False:
-                    indic =  list(numpy.nonzero(nl._data))
+                    indic =  [numpy.array(_) for _ in numpy.nonzero(nl._data)]
                     indic[0] = indic[0] + nl.offsets[0]
                     indic[1] += nl.offsets[1]
                     indic[2] += nl.offsets[2]
@@ -437,6 +437,7 @@ class ClassificationMgr(object):
                 self.matrixLock.release()
                 print e
                 traceback.print_exc(file=sys.stdout)
+                return
         self.matrixLock.release()
         
     def clearFeaturesAndTrainingForImage(self, dataItemImage):

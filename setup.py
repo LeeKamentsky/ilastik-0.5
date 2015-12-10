@@ -48,6 +48,13 @@ for root, subFolders, files in os.walk(rootdir):
         
 iconFileList.extend(uiFileList)
 
+modulesFileList = []
+rootdir = 'ilastik/modules/'
+for root, subfolders, files in os.walk(rootdir):
+    for file in files:
+        if '.ui' in file:
+            modulesFileList.append(os.path.join(root[len(rootdir):], file))
+
 setup(name = 'ilastik',
       version = '0.5',
       description = 'Interactive Learning and Segmentation Tool Kit',
@@ -58,5 +65,7 @@ setup(name = 'ilastik',
       keywords = ['segmentation', 'numpy', 'ndarray', 'image', 'classification', 'PyQt4'],
       packages = find_packages(),
       py_modules = ['ilastik/ilastikMain'],
-      package_data = {'ilastik.gui' : iconFileList},
+      package_data = {
+          'ilastik.gui' : iconFileList,
+          'ilastik.modules': modulesFileList },
       long_description = ''' ''')

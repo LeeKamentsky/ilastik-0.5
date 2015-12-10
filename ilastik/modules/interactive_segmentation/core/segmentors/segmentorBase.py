@@ -27,8 +27,12 @@
 #    authors and should not be interpreted as representing official policies, either expressed
 #    or implied, of their employers.
 import vigra, numpy
-from enthought.traits.api import *
-from enthought.traits.ui.api import *
+try:
+    from enthought.traits.api import *
+    from enthought.traits.ui.api import *
+except:
+    from traits.api import *
+    from traitsui import *
 
 
 class SegmentorBase(HasTraits):
