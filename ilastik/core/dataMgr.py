@@ -147,16 +147,21 @@ class BlockAccessor():
         startx = max(0, x*self._blockSize - overlap) 
         endx = min(self._data.shape[1], (x+1)*self._blockSize + overlap)
         if x+1 >= self._cX:
+            #leek - readjust startx
+            startx = max(0, min(startx, self._data.shape[1] - overlap * 2 - 1))
             endx = self._data.shape[1]
         
         starty = max(0, y*self._blockSize - overlap)
         endy = min(self._data.shape[2], (y+1)*self._blockSize + overlap) 
         if y+1 >= self._cY:
+            #leek - readjust starty
+            starty = max(0, min(starty, self._data.shape[2] - overlap * 2 - 1))
             endy = self._data.shape[2]
     
         startz = max(0, z*self._blockSize - overlap)
         endz = min(self._data.shape[3], (z+1)*self._blockSize + overlap)
         if z+1 >= self._cZ:
+            startz = max(0, min(startz, self._data.shape[3] - overlap * 2 - 1))
             endz = self._data.shape[3]
         res = (startx,endx,starty,endy,startz,endz,)
         self._lock.release()
